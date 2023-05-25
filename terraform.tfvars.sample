@@ -1,0 +1,9 @@
+config = {
+  os_cloud_name = "scs1"
+  keypair         = "/pathtoyourpublickey/ssh.pub"
+  flavor_name     = "aosflavor"
+  organization = { 
+    name = "yourorganisation"
+  }
+  instance_network_name = "mystandardosnetwork"
+}
