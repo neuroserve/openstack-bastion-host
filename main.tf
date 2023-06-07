@@ -13,6 +13,22 @@ variable "password" {
   default = "totalgeheim" 
 }
 
+variable "tenant_name" {
+  type    = string
+  default = "myproject"
+}
+
+variable "user_domain_name" {
+  type    = string
+  default = "mydomain"
+}
+
+variable "region" {
+  type   = string
+  default = "myregion"
+}
+
+
 data "openstack_images_image_v2" "os" {
   name        = "Debian 11"
   most_recent = true
@@ -68,17 +84,17 @@ resource "openstack_networking_secgroup_rule_v2" "sr_icmp" {
   security_group_id = openstack_networking_secgroup_v2.sg_bastionhost.id
 }
 
-resource "openstack_networking_network_v2" "backnet" {
-  name              = "backnet"
-  admin_state_up    = "true"
-}
+#resource "openstack_networking_network_v2" "backnet" {
+#  name              = "backnet"
+#  admin_state_up    = "true"
+#}
 
-resource "openstack_networking_subnet_v2" "subbacknet" {
-  name              = "subbacknet"
-  network_id        = "${openstack_networking_network_v2.backnet.id}"
-  cidr              = "192.168.13.0/24"
-  ip_version        = 4
-}
+#resource "openstack_networking_subnet_v2" "subbacknet" {
+#  name              = "subbacknet"
+#  network_id        = "${openstack_networking_network_v2.backnet.id}"
+#  cidr              = "192.168.13.0/24"
+#  ip_version        = 4
+#}
 
 resource "openstack_compute_instance_v2" "bastionhost" {
   name            = "bastionhost"
@@ -91,9 +107,9 @@ resource "openstack_compute_instance_v2" "bastionhost" {
     name = var.config.instance_network_name
   }
 
-  network {
-    name = "${openstack_networking_network_v2.backnet.name}"
-  }
+#  network {
+#    name = "${openstack_networking_network_v2.backnet.name}"
+#  }
 }
 
 resource "openstack_networking_floatingip_v2" "bastion_flip" {
